@@ -1,5 +1,7 @@
 import {createStore} from 'redux';
-const counter = (state = 0, action) => {
+import ReactDom from 'react-dom';
+import React from 'react';
+const counter = (state = 0, action = null) => {
     switch (action.type) {
         case 'INCREMENT':
             return state + 1;
@@ -8,16 +10,36 @@ const counter = (state = 0, action) => {
         default:
             return state;
     }
-}
+};
+const Counter = ({value, onIncrement, onDecrement}) => (
+    <div>
+        <h1> {value} </h1>
+        <button onClick={onIncrement}>+</button>
+        <button onClick={onDecrement}>-</button>
+    </div>
+);
 const store = createStore(counter);
 const render = () => {
-    document.body.innerText = store.getState();
-}
+    ReactDom.render(
+        <Counter
+            value={store.getState()}
+            onIncrement={() =>
+                    store.dispatch({
+                        type: 'INCREMENT'
+                    })
+            }
+            onDecrement={() =>
+                    store.dispatch({
+                        type: 'DECREMENT'
+                    })
+            }
+        />,
+        document.getElementById('root')
+    );
+};
 store.subscribe(render);
-
-render();
-document.addEventListener('click', ()=> {
-    store.dispatch({type: 'INCREMENT'});
-});
+window.onload = function(){
+    render();
+};
 
 export {counter};
