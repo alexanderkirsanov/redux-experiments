@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "scriptPreprocessor": "<rootDir>/app/preprocessor.js",
     "testFileExtensions": [
       "es6",
       "js"
@@ -16,6 +16,9 @@
       "js",
       "json",
       "es6"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/"
     ]
   },
   "author": "",
@@ -28,6 +31,7 @@
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
     "jest-cli": "^0.8.0",
+    "jest-webpack-alias": "^2.0.0",
     "webpack": "^1.12.9"
   },
   "dependencies": {
