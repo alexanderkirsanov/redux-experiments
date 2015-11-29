@@ -1,45 +1,16 @@
-import {createStore} from 'redux';
-import ReactDom from 'react-dom';
-import React from 'react';
-const counter = (state = 0, action = null) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1;
-        case 'DECREMENT':
-            return state - 1;
-        default:
+const todos = (state = [], action) => {
+    switch (action.type){
+        case 'ADD_TODO':
+            return [
+                ...state,
+                {
+                    id: action.id,
+                    text: action.text,
+                    completed: false
+                }
+            ];
+        default :
             return state;
     }
 };
-const Counter = ({value, onIncrement, onDecrement}) => (
-    <div>
-        <h1> {value} </h1>
-        <button onClick={onIncrement}>+</button>
-        <button onClick={onDecrement}>-</button>
-    </div>
-);
-const store = createStore(counter);
-const render = () => {
-    ReactDom.render(
-        <Counter
-            value={store.getState()}
-            onIncrement={() =>
-                    store.dispatch({
-                        type: 'INCREMENT'
-                    })
-            }
-            onDecrement={() =>
-                    store.dispatch({
-                        type: 'DECREMENT'
-                    })
-            }
-        />,
-        document.getElementById('root')
-    );
-};
-store.subscribe(render);
-window.onload = function(){
-    render();
-};
-
-export {counter};
+module.exports = todos;

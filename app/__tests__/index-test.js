@@ -1,7 +1,24 @@
 jest.dontMock('../src');
-const counter = require('../src/index.js');
+const deepFreeze = require('deep-freeze');
+const todos = require('../src/index.js');
 describe('counter tests', () => {
-   it('should be defined',()  => {
-       expect(counter).toBeDefined();
-   })
+
+    it('test freezed reducer', () => {
+        const stateBefore = [];
+        const action = {
+            type: 'ADD_TODO',
+            id: 0,
+            text: 'learn redux'
+        };
+        const stateAfter = [
+            {
+                id: 0,
+                text: 'learn redux',
+                completed: false
+            }
+        ];
+        deepFreeze(stateBefore);
+        deepFreeze(action);
+        expect(todos(stateBefore, action)).toEqual(stateAfter);
+    });
 });
